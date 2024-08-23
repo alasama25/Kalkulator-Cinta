@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Cinta</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .calculator {
+            width: 250px;
+            height: 450px;
+            background-color: #000;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        .display {
+            background-color: #222;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            text-align: right;
+            padding: 15px;
+            font-size: 1.6em;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button.operator {
+            background-color: #FF7F00;
+            color: #fff;
+        }
+
+        .button.equal {
+            background-color: #FF7F00;
+            color: #fff;
+            grid-column: span 2;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #444;
+        }
+
+        .button:active {
+            background-color: #555;
+            transform: scale(0.98);
+        }
+
+        .button.operator:hover {
+            background-color: #ec971f;
+        }
+
+        .button.operator:active {
+            background-color: #d9534f;
+        }
+
+        .button.equal:hover {
+            background-color: #FF7F00;
+        }
+
+        .button.equal:active {
+            background-color: #FF7F00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="button" onclick="clearDisplay()">C</button>
+            <button class="button" onclick="deleteLast()">⌫</button>
+            <button class="button operator" onclick="appendOperator('/')">÷</button>
+            <button class="button operator" onclick="appendOperator('*')">×</button>
+
+            <button class="button" onclick="appendNumber(7)">7</button>
+            <button class="button" onclick="appendNumber(8)">8</button>
+            <button class="button" onclick="appendNumber(9)">9</button>
+            <button class="button operator" onclick="appendOperator('-')">−</button>
+
+            <button class="button" onclick="appendNumber(4)">4</button>
+            <button class="button" onclick="appendNumber(5)">5</button>
+            <button class="button" onclick="appendNumber(6)">6</button>
+            <button class="button operator" onclick="appendOperator('+')">+</button>
+
+            <button class="button" onclick="appendNumber(1)">1</button>
+            <button class="button" onclick="appendNumber(2)">2</button>
+            <button class="button" onclick="appendNumber(3)">3</button>
+            <button class="button equal" onclick="calculate()">=</button>
+
+            <button class="button" onclick="appendNumber(0)">0</button>
+            <button class="button" onclick="appendDot()">.</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        let currentInput = '';
+        let currentOperator = null;
+
+        function appendNumber(number) {
+            if (currentInput === '0' && number === 0) return;
+            currentInput += number.toString();
+            updateDisplay();
+        }
+
+        function appendOperator(operator) {
+            if (currentInput === '' && operator !== '-') return;
+            if (currentOperator !== null) calculate();
+            currentOperator = operator;
+            currentInput += ` ${operator} `;
+            updateDisplay();
+        }
+
+        function appendDot() {
+            if (currentInput.includes('.')) return;
+            currentInput += '.';
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentInput = '';
+            currentOperator = null;
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            if (currentInput.length > 0) {
+                currentInput = currentInput.slice(0, -1);
+                updateDisplay();
+            }
+        }
+
+        function calculate() {
+            if (currentInput === '25 + 30' || currentInput === '25 + 30 ') {
+                currentInput = 'I LOVE YOU ♥️';
+                currentOperator = null;
+                updateDisplay();
+                return;
+            }
+
+            try {
+                currentInput = eval(currentInput.replace('×', '*').replace('÷', '/')).toString();
+                currentOperator = null;
+                updateDisplay();
+            } catch (error) {
+                currentInput = 'Error';
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            display.innerText = currentInput === '' ? '0' : currentInput;
+        }
+    </script>
+
+</body>
+</html>
