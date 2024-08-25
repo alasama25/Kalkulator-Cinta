@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #b3e5fc);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 100%;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .intro {
+            font-size: 1.8em;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .calculator {
+            width: 100%;
+            max-width: 360px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .display {
+            background-color: #015b9c;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            text-align: right;
+            padding: 20px;
+            font-size: 2em;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            width: 100%;
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+
+        .display:focus {
+            background-color: #015b9c;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+        }
+
+        .button {
+            background-color: #0178DC;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button.operator {
+            background-color: #015b9c;
+        }
+
+        .button.equal {
+            background-color: #015b9c;
+            grid-column: span 2;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #015b9c;
+        }
+
+        .button:active {
+            background-color: #014b7a;
+            transform: scale(0.98);
+        }
+
+        .button.operator:hover {
+            background-color: #014b7a;
+        }
+
+        .button.operator:active {
+            background-color: #013d6a;
+        }
+
+        .button.equal:hover {
+            background-color: #014b7a;
+        }
+
+        .button.equal:active {
+            background-color: #013d6a;
+        }
+
+        @media (max-width: 600px) {
+            .display {
+                font-size: 1.5em;
+            }
+
+            .button {
+                padding: 15px;
+                font-size: 1.2em;
+            }
+
+            .buttons {
+                gap: 5px;
+            }
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #333;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #0178DC;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="intro">HALO CUY</div>
+            <div class="description">Kali ini gw buat kalkulator, tapi keknya ada yang aneh deh, coba deh lu itung itu pake kalkulator</div>
+        </div>
+        <div class="calculator">
+            <div class="display" id="display">0</div>
+            <div class="buttons">
+                <button class="button" onclick="clearDisplay()">C</button>
+                <button class="button" onclick="deleteLast()">⌫</button>
+                <button class="button operator" onclick="appendOperator('/')">÷</button>
+                <button class="button operator" onclick="appendOperator('*')">×</button>
+
+                <button class="button" onclick="appendNumber(7)">7</button>
+                <button class="button" onclick="appendNumber(8)">8</button>
+                <button class="button" onclick="appendNumber(9)">9</button>
+                <button class="button operator" onclick="appendOperator('-')">−</button>
+
+                <button class="button" onclick="appendNumber(4)">4</button>
+                <button class="button" onclick="appendNumber(5)">5</button>
+                <button class="button" onclick="appendNumber(6)">6</button>
+                <button class="button operator" onclick="appendOperator('+')">+</button>
+
+                <button class="button" onclick="appendNumber(1)">1</button>
+                <button class="button" onclick="appendNumber(2)">2</button>
+                <button class="button" onclick="appendNumber(3)">3</button>
+                <button class="button equal" onclick="calculate()">=</button>
+
+                <button class="button" onclick="appendNumber(0)">0</button>
+                <button class="button" onclick="appendDot()">.</button>
+            </div>
+        </div>
+        <div class="footer">
+            <p>AHAHHAHAHA KENA TIPUU, mana ada kalkulator kek gitu wkwk, yaudah ya cuy ini website terakhir gw, makasih ya udah liat liat website gw, kapan² gw tambahin lagi deh hehe, byee</p>
+            <p> 
+                <a href="https://instagram.com/alhsnmlk15_" target="_blank">Instagram</a> | 
+                <a href="https://wa.me/+6281252878350" target="_blank">WhatsApp</a> | 
+                <a href="https://tiktok.com/@aalzzzyy" target="_blank">TikTok</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        let currentInput = '';
+        let currentOperator = null;
+
+        function appendNumber(number) {
+            if (currentInput === '0' && number === 0) return;
+            currentInput += number.toString();
+            updateDisplay();
+        }
+
+        function appendOperator(operator) {
+            if (currentInput === '' && operator !== '-') return;
+            if (currentOperator !== null) calculate();
+            currentOperator = operator;
+            currentInput += ` ${operator} `;
+            updateDisplay();
+        }
+
+        function appendDot() {
+            if (currentInput.includes('.')) return;
+            currentInput += '.';
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentInput = '';
+            currentOperator = null;
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            if (currentInput.length > 0) {
+                currentInput = currentInput.slice(0, -1);
+                updateDisplay();
+            }
+        }
+
+        function calculate() {
+            if (currentInput.includes('+') || currentInput.includes('-') || currentInput.includes('*') || currentInput.includes('/')) {
+                display.innerText = 'I LOVE YOU ♥️';
+                setTimeout(() => {
+                    try {
+                        const result = eval(currentInput.replace('×', '*').replace('÷', '/'));
+                        display.innerText = `TAPI BOONG 🗿\n\nHasil: ${result}`;
+                    } catch (error) {
+                        display.innerText = 'Error';
+                    }
+                }, 1000);
+                return;
+            }
+
+            try {
+                display.innerText = 'I LOVE YOU ♥️';
+                setTimeout(() => {
+                    currentInput = eval(currentInput.replace('×', '*').replace('÷', '/')).toString();
+                    updateDisplay();
+                }, 1000);
+            } catch (error) {
+                display.innerText = 'Error';
+            }
+        }
+
+        function updateDisplay() {
+            display.innerText = currentInput === '' ? '0' : currentInput;
+        }
+    </script>
+</body>
+</html>
