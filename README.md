@@ -1,2 +1,2 @@
-# kalkulator-cinta
+# kalkulator
 gabut 
